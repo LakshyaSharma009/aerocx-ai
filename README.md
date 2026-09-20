@@ -124,24 +124,4 @@ src/{data,models,rag,api,db,utils}/  app/streamlit_app.py  scripts/{train,init_d
 tests/  docs/  data/{raw,processed,kb}/  models/  Dockerfile  docker-compose.yml
 ```
 
-## Interview prep (likely questions)
-1. *How do you prevent target leakage?* — `resolution_time_hours` excluded; vectorisers
-   fit on train only; time-ordered splits discussed as next step.
-2. *Why XGBoost + scale_pos_weight?* — tabular, imbalanced (~27% positive); weight ≈ neg/pos.
-3. *LogReg vs SVM tie at F1 1.0?* — synthetic templates separable; harness (macro-F1 +
-   confusion matrix) is the transferable part.
-4. *How does RAG stay grounded?* — system prompt (context-only, abstain, cite), sources
-   returned, FACT vs RECOMMENDATION split; mock provider makes abstention testable.
-5. *SHAP vs fallback?* — TreeExplainer per-case attributions; fallback weights global
-   gain by per-case magnitude; both capped at top-4.
-6. *Why recall > precision for escalation?* — missing an escalation costs more than a
-   false alarm; threshold tunable per operating point.
-7. *How do you run offline?* — fallback sentiment/TF-IDF embeddings/mock LLM/local index.
 
-## Resume bullets (only shipped functionality)
-- Built end-to-end aviation CX intelligence app: FastAPI + Streamlit + Postgres/pgvector,
-  Docker Compose; 24 pytest tests passing.
-- Trained TF-IDF classifiers (LogReg vs LinearSVC harness) and XGBoost escalation model
-  (val F1 0.782, ROC-AUC 0.946) with SHAP/gain explanations; leakage controls documented.
-- Implemented grounded RAG over synthetic KB (chunk → embed → retrieve → cite) with a
-  provider abstraction (mock/OpenAI/HF) and abstention behaviour.
