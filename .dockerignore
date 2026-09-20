@@ -1,9 +1,8 @@
 __pycache__/
 *.pyc
-.pytest_cache/
+.env
 .venv/
 venv/
-.env
 models/*.joblib
 models/rag_index/
 data/raw/

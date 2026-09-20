@@ -1,0 +1,449 @@
+{
+  "classifier": {
+    "best": "logreg",
+    "metrics": {
+      "logreg": {
+        "accuracy": 1.0,
+        "precision_macro": 1.0,
+        "recall_macro": 1.0,
+        "f1_macro": 1.0,
+        "confusion_matrix": [
+          [
+            72,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            44,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            134,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            131,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            43,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            95,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            65,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            63,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            103
+          ]
+        ],
+        "labels": [
+          "Billing",
+          "Contract",
+          "Maintenance",
+          "Maintenance Delay",
+          "Other",
+          "Parts Availability",
+          "Scheduling",
+          "Service Quality",
+          "Technical Issue"
+        ],
+        "report": {
+          "Billing": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1-score": 1.0,
+            "support": 72.0
+          },
+          "Contract": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1-score": 1.0,
+            "support": 44.0
+          },
+          "Maintenance": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1-score": 1.0,
+            "support": 134.0
+          },
+          "Maintenance Delay": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1-score": 1.0,
+            "support": 131.0
+          },
+          "Other": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1-score": 1.0,
+            "support": 43.0
+          },
+          "Parts Availability": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1-score": 1.0,
+            "support": 95.0
+          },
+          "Scheduling": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1-score": 1.0,
+            "support": 65.0
+          },
+          "Service Quality": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1-score": 1.0,
+            "support": 63.0
+          },
+          "Technical Issue": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1-score": 1.0,
+            "support": 103.0
+          },
+          "accuracy": 1.0,
+          "macro avg": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1-score": 1.0,
+            "support": 750.0
+          },
+          "weighted avg": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1-score": 1.0,
+            "support": 750.0
+          }
+        }
+      },
+      "svm": {
+        "accuracy": 1.0,
+        "precision_macro": 1.0,
+        "recall_macro": 1.0,
+        "f1_macro": 1.0,
+        "confusion_matrix": [
+          [
+            72,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            44,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            134,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            131,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            43,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            95,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            65,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            63,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            103
+          ]
+        ],
+        "labels": [
+          "Billing",
+          "Contract",
+          "Maintenance",
+          "Maintenance Delay",
+          "Other",
+          "Parts Availability",
+          "Scheduling",
+          "Service Quality",
+          "Technical Issue"
+        ],
+        "report": {
+          "Billing": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1-score": 1.0,
+            "support": 72.0
+          },
+          "Contract": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1-score": 1.0,
+            "support": 44.0
+          },
+          "Maintenance": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1-score": 1.0,
+            "support": 134.0
+          },
+          "Maintenance Delay": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1-score": 1.0,
+            "support": 131.0
+          },
+          "Other": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1-score": 1.0,
+            "support": 43.0
+          },
+          "Parts Availability": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1-score": 1.0,
+            "support": 95.0
+          },
+          "Scheduling": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1-score": 1.0,
+            "support": 65.0
+          },
+          "Service Quality": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1-score": 1.0,
+            "support": 63.0
+          },
+          "Technical Issue": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1-score": 1.0,
+            "support": 103.0
+          },
+          "accuracy": 1.0,
+          "macro avg": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1-score": 1.0,
+            "support": 750.0
+          },
+          "weighted avg": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1-score": 1.0,
+            "support": 750.0
+          }
+        }
+      }
+    }
+  },
+  "escalation": {
+    "precision": 0.7257383966244726,
+    "recall": 0.8472906403940886,
+    "f1": 0.7818181818181819,
+    "roc_auc": 0.9456957340081592,
+    "pr_auc": 0.8751807427632087,
+    "confusion_matrix": [
+      [
+        482,
+        65
+      ],
+      [
+        31,
+        172
+      ]
+    ],
+    "scale_pos_weight": 2.7037037037037037,
+    "feature_names": [
+      "delay_hours",
+      "previous_complaints",
+      "severity_code",
+      "priority_code",
+      "sentiment_code",
+      "is_negative",
+      "is_high_severity",
+      "log_delay",
+      "msg_len",
+      "msg_words",
+      "complaint_x_delay",
+      "category_Billing",
+      "category_Contract",
+      "category_Maintenance",
+      "category_Maintenance Delay",
+      "category_Other",
+      "category_Parts Availability",
+      "category_Scheduling",
+      "category_Service Quality",
+      "category_Technical Issue",
+      "customer_priority_gold",
+      "customer_priority_platinum",
+      "customer_priority_silver",
+      "customer_priority_standard",
+      "aircraft_type_A320neo",
+      "aircraft_type_A321neo",
+      "aircraft_type_A350-900",
+      "aircraft_type_ATR 72-600",
+      "aircraft_type_B737 MAX 8",
+      "aircraft_type_B777-300ER",
+      "aircraft_type_B787-9",
+      "aircraft_type_E190-E2"
+    ]
+  },
+  "shapes": {
+    "train": [
+      3500,
+      21
+    ],
+    "val": [
+      750,
+      21
+    ],
+    "test": [
+      750,
+      21
+    ]
+  },
+  "seed": 42,
+  "n_synthetic": 4250
+}
