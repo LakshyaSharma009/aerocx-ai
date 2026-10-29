@@ -6,6 +6,7 @@ palette; the app degrades gracefully to the in-process pipeline when the API is 
 
 from __future__ import annotations
 
+import html
 import json
 import os
 import sys
@@ -121,6 +122,25 @@ def badge(text: str, color: str) -> str:
     return f'<span class="badge" style="background:{color}">{text}</span>'
 
 
+def card(text: str) -> str:
+    """Render text inside the brand card, preserving line breaks.
+
+    The model responses are multi-line (FACT / bullet list / RECOMMENDATION /
+    Sources). Injected raw, HTML collapses the newlines into one blob, so we
+    HTML-escape and turn newlines into <br> to keep the structure readable.
+    """
+    safe = html.escape(str(text)).replace("\n", "<br>")
+    return f'<div class="aero-card">{safe}</div>'
+
+
+@st.cache_resource
+def get_retriever():
+    """Build the RAG retriever once and reuse it across queries."""
+    from src.rag.retriever import Retriever
+
+    return Retriever()
+
+
 def level_color(level: str) -> str:
     return LEVEL_COLORS.get(str(level).lower(), BRAND)
 
@@ -225,6 +245,9 @@ elif page == "Case Analyzer":
                                      "A350-900", "B777-300ER", "ATR 72-600", "E190-E2"])
 
     if st.button("🔍 Analyze case", type="primary"):
+      if not msg.strip():
+        st.warning("Please enter a customer message to analyze.")
+      else:
         with st.spinner("Running classification → sentiment → escalation → RAG..."):
             res = api_post("/analyze", {"message": msg, "delay_hours": delay,
                                         "previous_complaints": int(prev),
@@ -239,7 +262,16 @@ elif page == "Case Analyzer":
         m1.metric("Category", res["category"], f"{res.get('category_confidence', 0):.0%} conf.")
         m2.metric("Sentiment", res["sentiment"].title(), f"score {res['sentiment_score']:.2f}")
         m3.metric("Escalation probability", f"{res['escalation_probability']:.0%}")
-        m4.metric("Avg category delay", f"{delay:.0f} h")
+        cat_delay = None
+        if not df.empty and {"category", "delay_hours"} <= set(df.columns):
+            sub = df.loc[df["category"] == res["category"], "delay_hours"].dropna()
+            if len(sub):
+                cat_delay = float(sub.mean())
+        if cat_delay is not None:
+            m4.metric(f"Avg delay · {res['category']}", f"{cat_delay:.1f} h",
+                      f"{delay - cat_delay:+.1f} h vs. this case", delta_color="inverse")
+        else:
+            m4.metric("Risk level", str(res["risk_level"]).title())
 
         st.markdown(
             "**Severity / Risk:** &nbsp;"
@@ -252,8 +284,7 @@ elif page == "Case Analyzer":
         left, right = st.columns([1, 1])
         with left:
             st.markdown("##### 🛠️ Recommended action")
-            st.markdown(f'<div class="aero-card">{res.get("recommended_action", "—")}</div>',
-                        unsafe_allow_html=True)
+            st.markdown(card(res.get("recommended_action", "—")), unsafe_allow_html=True)
             st.markdown("##### 📌 Key prediction factors")
             factors = res.get("important_factors", [])
             if factors and isinstance(factors[0], dict):
@@ -264,8 +295,7 @@ elif page == "Case Analyzer":
                 st.caption("No factors returned.")
         with right:
             st.markdown("##### 🤖 Grounded response")
-            st.markdown(f'<div class="aero-card">{res.get("generated_response", "—")}</div>',
-                        unsafe_allow_html=True)
+            st.markdown(card(res.get("generated_response", "—")), unsafe_allow_html=True)
             srcs = res.get("sources", [])
             st.markdown("##### 📚 Sources")
             st.markdown("".join(f'<span class="chip">{s}</span>' for s in srcs) or "—",
@@ -307,7 +337,13 @@ elif page == "Risk Analytics":
             st.plotly_chart(style_fig(fig, 340), use_container_width=True)
 
         st.markdown("#### High-risk cases (escalated, sample)")
-        st.dataframe(df[df["escalated"] == 1].head(25), use_container_width=True)
+        escalated = df[df["escalated"] == 1]
+        st.dataframe(escalated.head(25), use_container_width=True)
+        st.download_button(
+            "⬇️ Download all escalated cases (CSV)",
+            escalated.to_csv(index=False).encode("utf-8"),
+            file_name="aerocx_escalated_cases.csv", mime="text/csv",
+        )
 
 
 # -------------------------------------------------- AI KNOWLEDGE ASSISTANT ---
@@ -315,14 +351,16 @@ elif page == "AI Knowledge Assistant":
     st.subheader("Ask the knowledge base")
     q = st.text_input("Ask about support procedures", value="How are AOG parts expedited?")
     if st.button("💬 Ask", type="primary"):
+      if not q.strip():
+        st.warning("Please enter a question to ask the knowledge base.")
+      else:
         with st.spinner("Retrieving context and composing a grounded answer..."):
             res = api_post("/rag/query", {"query": q, "top_k": 4})
             if res is None:
                 from src.rag import generator as gen
-                from src.rag.retriever import Retriever
 
                 try:
-                    hits = Retriever().search(q)
+                    hits = get_retriever().search(q)
                 except Exception as e:
                     hits = []
                     st.error(str(e))
@@ -331,7 +369,7 @@ elif page == "AI Knowledge Assistant":
                        "provider": out["provider"]}
                 st.info("FastAPI unreachable — used in-process RAG.")
 
-        st.markdown(f'<div class="aero-card">{res["answer"]}</div>', unsafe_allow_html=True)
+        st.markdown(card(res["answer"]), unsafe_allow_html=True)
         st.markdown("##### 📚 Sources")
         srcs = res.get("sources", [])
         st.markdown("".join(f'<span class="chip">{s}</span>' for s in srcs) or "—",
