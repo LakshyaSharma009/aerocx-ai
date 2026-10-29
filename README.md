@@ -4,6 +4,14 @@
 > **synthetically generated** for engineering demonstration. No proprietary data, no GE
 > Aerospace internal systems, documents, or APIs are used or claimed.
 
+**🔗 Live demo:** https://aerocx-ai-qq2ewrnutefdcdnejfjikx.streamlit.app/ &nbsp;·&nbsp; **Code:** https://github.com/LakshyaSharma009/aerocx-ai
+
+![AeroCX AI dashboard](docs/img/dashboard.jpg)
+
+> The live demo runs the full pipeline for free: `mock` LLM provider (no API key), a
+> committed TF-IDF RAG index (no vector DB), and the in-process analysis pipeline (no
+> separate backend). Hosted on Streamlit Community Cloud.
+
 ## 1. Project overview
 AeroCX AI ingests aviation customer-service interactions and returns: issue category,
 sentiment, severity, escalation probability (with explanations), relevant knowledge-base
