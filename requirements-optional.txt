@@ -1,0 +1,18 @@
+# Optional heavy extras — NOT required for the free demo.
+# The app degrades gracefully without these:
+#   - sentence-transformers / transformers / torch: encoder-based RAG embeddings and
+#     DistilBERT sentiment. Without them, the app uses the committed TF-IDF index and a
+#     TF-IDF + LogisticRegression sentiment model (the shipped default).
+#   - shap: SHAP explanations for the escalation model. Without it, a gain-weighted
+#     feature-importance fallback is used.
+#   - sqlalchemy / psycopg2-binary / pgvector: optional PostgreSQL + pgvector persistence
+#     (scripts/init_db.py, src/db/). Without them, the local cosine index is used.
+#
+# Install with:  pip install -r requirements-optional.txt
+sentence-transformers>=2.2
+transformers>=4.35
+torch>=2.1
+shap>=0.43
+sqlalchemy>=2.0
+psycopg2-binary>=2.9
+pgvector>=0.2

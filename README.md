@@ -53,8 +53,14 @@ See `docs/api.md` and live Swagger at `/docs`. Endpoints: `GET /health`, `POST
 ## 8. Installation
 ```bash
 python -m venv .venv && .venv\Scripts\activate   # Windows
-pip install -r requirements.txt
+pip install -r requirements.txt                  # slim runtime: runs the full demo, $0
 copy .env.example .env
+```
+`requirements.txt` is a slim set that runs the full pipeline on the committed TF-IDF RAG
+index and the `mock` LLM (no torch, no vector DB, no API keys). Optional add-ons:
+```bash
+pip install -r requirements-optional.txt   # encoder embeddings/sentiment (torch), SHAP, Postgres
+pip install -r requirements-dev.txt        # pytest + httpx for the test suite
 ```
 
 ## 9. Environment variables
@@ -81,7 +87,7 @@ python -m src.rag.ingest                        # builds models/rag_index/
 $env:PYTHONPATH="."
 uvicorn src.api.main:app --reload --port 8000        # API + /docs
 streamlit run app/streamlit_app.py                   # dashboard (API_URL env optional)
-python -m pytest tests/ -q                           # 24 tests
+python -m pytest tests/ -q                           # 31 tests (needs requirements-dev.txt)
 ```
 
 ## 12. Docker instructions
@@ -102,7 +108,7 @@ offline; RAG checked for citations and abstention. Full numbers: `docs/model_eva
   are near-separable — see limitations).
 - **Escalation (XGBoost)**: precision **0.726**, recall **0.847**, F1 **0.782**,
   ROC-AUC **0.946**, PR-AUC **0.875**; confusion `[[482, 65], [31, 172]]`.
-- **Tests**: 24/24 passing. **RAG**: grounded answers with source lists; mock provider
+- **Tests**: 31/31 passing. **RAG**: grounded answers with source lists; mock provider
   by default (no keys needed).
 
 ## 15. Limitations

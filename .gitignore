@@ -4,9 +4,10 @@ __pycache__/
 .venv/
 venv/
 .env
-models/*.joblib
-models/rag_index/
-data/raw/
-data/processed/
 logs/
 .DS_Store
+
+# NOTE: trained model artefacts (models/*.joblib, models/rag_index/) and the
+# synthetic datasets (data/raw/, data/processed/) ARE intentionally committed so
+# the free Streamlit Cloud demo loads instantly and is fully reproducible.
+# They are small (~6 MB total) and contain only synthetic data.
